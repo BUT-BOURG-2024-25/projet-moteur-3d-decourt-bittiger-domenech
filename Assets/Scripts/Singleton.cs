@@ -9,12 +9,22 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if(m_instance != null)
+        if (m_instance != null && m_instance != this)
         {
             Debug.LogError($"Already an instance of {GetType().Name} existing. Destroying it.");
-            Destroy(gameObject);
+            Destroy(gameObject); // Détruire l'instance en trop
             return;
         }
+
         m_instance = this as T;
+        DontDestroyOnLoad(gameObject); // Garde l'instance à travers les scènes
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (m_instance == this)
+        {
+            m_instance = null;
+        }
     }
 }

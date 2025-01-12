@@ -27,4 +27,13 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             m_instance = null;
         }
     }
+
+    public static void ResetInstance()
+    {
+        if (m_instance != null)
+        {
+            Destroy(m_instance.gameObject);
+            m_instance = null;
+        }
+    }
 }

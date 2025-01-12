@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI scoreText; // Lien vers le texte du score
     public TMPro.TextMeshProUGUI bestScoreText; // Lien vers le texte du meilleur score (Game Over)
     public GameObject gameOverUI; // Lien vers l'écran de Game Over
-    public PlayerSpawner playerSpawner;
+    public PlayerSpawner playerSpawner; // Class de gestion d'apparition des soldat
 
     private Coroutine scoreCoroutine;
 
@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-
         Debug.Log("Réinitialisation de la partie...");
 
         if (playerSpawner != null)
@@ -81,7 +80,6 @@ public class GameManager : MonoBehaviour
         if (!isGameOver)
         {
             score += points;
-            //Debug.Log($"Score ajouté : {points}, Score total : {score}");
             UpdateScoreUI();
         }
     }
@@ -91,7 +89,6 @@ public class GameManager : MonoBehaviour
         if (scoreText != null)
         {
             scoreText.text = "Score : " + score;
-            //Debug.Log($"UI mise à jour : Score : {score}");
         }
         else
         {
@@ -122,14 +119,10 @@ public class GameManager : MonoBehaviour
         InitializeGame();
     }
 
-
     private void ResetSingletons()
     {
         // Réinitialisez vos Singletons manuellement si nécessaire
-        if (countSoldat.Instance != null)
-        {
-            Destroy(countSoldat.Instance.gameObject);
-        }
+        Singleton<countSoldat>.ResetInstance();
     }
 
     private void EnsureEssentialObjectsExist()
